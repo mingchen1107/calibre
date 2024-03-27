@@ -367,13 +367,13 @@ class Bootstrap(Command):
     def pre_sub_commands(self, opts):
         tdir = self.j(self.d(self.SRC), 'translations')
         clone_cmd = [
-            'git', 'clone', f'https://github.com/{self.TRANSLATIONS_REPO}.git', 'translations']
+            'git', 'clone', '--depth', '1', f'https://github.com/{self.TRANSLATIONS_REPO}.git', 'translations']
         if opts.ephemeral:
             if os.path.exists(tdir):
                 shutil.rmtree(tdir)
 
             st = time.time()
-            clone_cmd.insert(2, '--depth=1')
+            # clone_cmd.insert(2, '--depth=1')
             subprocess.check_call(clone_cmd, cwd=self.d(self.SRC))
             print('Downloaded translations in %d seconds' % int(time.time() - st))
         else:
